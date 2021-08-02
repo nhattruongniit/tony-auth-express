@@ -15,7 +15,6 @@ const PORT = process.env.PORT || 3000;
 
 // connect to DB
 mongoose.connect(
-  // 'mongodb+srv://nhattruongniit:truong123@cluster0.xga7w.mongodb.net/tony_course_fe?retryWrites=true&w=majority', 
   process.env.DB_CONNECT,
   { 
     useNewUrlParser: true, 
@@ -32,6 +31,6 @@ app.use(express.json());
 app.use('/api/user', authRoute);
 app.use('/api/posts', postsRoute);
 
-app.listen(3000, () => {
-  console.log(`Server Up and running localhost: ${3000}`)
+app.listen(PORT, () => {
+  console.log(`Server Up and running localhost: ${PORT}`)
 });
