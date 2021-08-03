@@ -5,24 +5,41 @@ A api authenticate to serve for the final course front end developer by Tony
 - express js
 - mongo
 
-BE: https://tony-auth-express.herokuapp.com/api/user/login
+Api:
+
+https://tony-auth-express.herokuapp.com
+
+Get fake avatar url:
+
+https://rawgit.com/Marak/faker.js/master/examples/browser/index.html
 
 ```bash
-# Login User
-POST  /api/user/login
-Content-Type: application/json
+# Admin account
+email: admin@gmail.com
+pass: 123456
 
-{
-  email: xxx,
-  password: xxx
-}
+# Authenticate User & Token
+POST  /api/auth
+Headers: x-auth-token: {token}
 
 # Register User
 POST  /api/user/register
 Content-Type: application/json
 
 {
-  name: xxx,
+  avatar: xxx,
+  firstName: xxx,
+  lastName: xxx,
+  email: xxx,
+  role: 'operator',
+  password: xxx,
+}
+
+# Login User
+POST  /api/user/login
+Content-Type: application/json
+
+{
   email: xxx,
   password: xxx,
 }
