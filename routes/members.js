@@ -124,76 +124,8 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
-// @route    GET api/user/:id
-// @desc     GET User
+// @route    GET api/user
+// @desc     Get user list
 // @access   Private
-router.get('/:id', auth, async (req, res) => {
-  const id = req.params.id;
-  try {
-    const user = await User.findById(id);
-    res.status(200).json({
-      data: user,
-      isSucess: true
-    })
-  } catch(err) {
-    res.status(400).json({
-      msg: 'User not found',
-      isSucess: false
-    })
-  }
-})
-
-// @route    PUT api/user
-// @desc     Update User
-// @access   Private
-router.put('/:id', auth, async (req, res) => {
-  const id = req.params.id;
-  const role = req.body.role;
-
-  const profile = {};
-  if (role) profile.role = role;
-
-  try {
-    const user = await User.findOneAndUpdate(
-      { _id: id },
-      { $set: profile },
-      { new: true }
-    );
-    if(!user) {
-      return res.status(200).json({
-        data: 'User not found',
-        isSucess: false
-      })
-    }
-    res.status(200).json({
-      msg: 'Update successfully!',
-      isSucess: true
-    })
-  } catch(err) {
-    res.status(400).json({
-      msg: `Can't update user`,
-      isSucess: false
-    })
-  }
-})
-
-// @route    DELETE api/user/:id
-// @desc     Update User
-// @access   Private
-router.delete('/:id', auth, async (req, res) => {
-  const id = req.params.id;
-  try {
-    await User.findOneAndRemove({ _id: id });
-    res.status(200).json({
-      msg: 'Delete successfully!',
-      isSucess: true
-    })
-  } catch(err) {
-    res.status(400).json({
-      msg: `Can't delete user`,
-      isSucess: false
-    })
-  }
-})
 
 module.exports = router;

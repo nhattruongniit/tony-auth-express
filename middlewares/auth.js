@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 
-module.exports =  function(req, res, next) {
+module.exports = function(req, res, next) {
   const token = req.header('x-auth-token');
-  if(!token) return res.status(400).json({
-    msg: 'Access Denied'
+  if(!token) return res.status(403).json({
+    msg: 'Access Denied',
+    isSucess: false
   });
 
   try {
@@ -12,7 +13,8 @@ module.exports =  function(req, res, next) {
     next();
   } catch(err) {
     res.status(400).json({
-      msg: 'Invalid Token'
+      msg: 'Invalid Token',
+      isSucess: false
     })
   }
 }
