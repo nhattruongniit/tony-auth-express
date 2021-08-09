@@ -1,112 +1,60 @@
 const router = require('express').Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
 
 // middleware
 const auth = require('../middlewares/auth');
 
 // model
-const User = require('../model/User');
+const Member = require('../model/Member');
 
-// @route    POST api/user/login
-// @desc     Register user
-// @access   Public
-router.post('/register', async (req, res) => {
-  const { firstName, lastName, avatar, email, role, password } = req.body;
-
-  // check email exist
-  const emailExist = await User.findOne({ email: email });
-  if(emailExist) return res.status(400).json({
-    msg: 'Email already exists',
-    isSucess: false
-  });
-
-  // hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
-  // create a new user
-  const user = new User({
+// @route    POST api/member
+// @desc     Add new member
+// @access   Private
+router.post('/', auth, async (req, res) => {
+  const { avatar, firstName, lastName, email, position, dateJoin, location } = req.body;
+  if(!location || location.length === 0) {
+    return res.status(400).json({
+      msg: 'Please fill full input',
+      isSucess: false
+    })
+  }
+  const newNember = new Member({
     avatar,
     firstName,
     lastName,
     email,
-    role,
-    password: hashPassword
-  });
+    position,
+    dateJoin,
+    location    
+  })
+
   try {
-    await user.save();
-    res.json({ 
-      msg: 'Register Successfully!',
+    const member = await newNember.save();
+    res.status(200).json({
+      data: member,
       isSucess: true
-    });
+    })
   } catch(err) {
     res.status(400).json({
-      msg: err.message,
+      msg: err,
       isSucess: false
-    });
+    })
   }
 })
 
-// @route    POST api/user/login
-// @desc     Login user
-// @access   Public
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  // check email exist
-  const user = await User.findOne({ email });
-  if(!user) return res.status(400).json({
-    msg: 'Email or password is wrong',
-    isSucess: false
-  });
-
-  // valid password
-  const validPass = await bcrypt.compare(password, user.password);
-  if(!validPass) return res.status(400).json({
-    msg: 'Email or password is wrong',
-    isSucess: false
-  });
-
-  // create and assign a token
-  const payload = {
-    user: {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      avatar: user.avatar,
-      email: user.email,
-      role: user.role
-    }
-  }
-
-  jwt.sign(
-    payload, 
-    process.env.TOKEN_SECRET,
-    { expiresIn: 36000 },
-    (err, token) => {
-      if (err) throw err;
-      res.header('x-auth-token', token).json({
-        token,
-        isSucess: true
-      });
-    } 
-  );
-})
-
-// @route    GET api/user
-// @desc     Get user list
+// @route    GET api/member
+// @desc     Get member list
 // @access   Private
 router.get('/', auth, async (req, res) => {
-  const page = parseInt(req.query.page || 1)
-  const limit = parseInt(req.query.limit || 10)
+  const page = parseInt(req.query.page || 1);
+  const limit = parseInt(req.query.limit || 10);
   const startOffset = (page - 1) * limit;
   const endOffset = startOffset + limit;
-
+  
   try {
-    const users = await User.find().sort({ data: -1 })
-    const total = users.length;
+    const members = await Member.find().sort({ data: -1 });
+    const total = members.length;
     const result = {
-      data: users,
+      data: members,
       page,
       limit,
       total,
@@ -114,7 +62,7 @@ router.get('/', auth, async (req, res) => {
     };
     if(total === 0) return res.status(200).json(result);
 
-    result.data = users.slice(startOffset, endOffset)
+    result.data = members.slice(startOffset, endOffset)
     res.status(200).json(result)
   } catch(err) {
     res.status(500).json({
@@ -123,9 +71,5 @@ router.get('/', auth, async (req, res) => {
     })
   }
 })
-
-// @route    GET api/user
-// @desc     Get user list
-// @access   Private
 
 module.exports = router;

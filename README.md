@@ -84,3 +84,32 @@ Body data:
 DELETE  /api/user/:id
 Headers: x-auth-token: {token}
 ```
+
+### Members
+
+```bash
+# Add New Member
+POST  /api/member
+Headers: x-auth-token: {token}
+Body data:
+{
+    "avatar": "https://cdn.fakercloud.com/avatars/ManikRathee_128.jpg",
+    "firstName": "Donna",
+    "lastName": "Hiti",
+    "email": "donna@gmail.com",
+    "position": "Front End Engineer",
+    "dateJoin": "2014-08-20",
+    "location": [
+        {
+            "address": "140 Dang Van Ngu",
+            "district": "phunhuan",
+            "city": "hcm"
+        }
+    ]
+}
+
+# Get List Member
+GET  /api/member
+GET  /api/member?page=1&limit=10
+Headers: x-auth-token: {token}
+```
