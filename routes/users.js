@@ -160,7 +160,7 @@ router.put('/:id', auth, async (req, res) => {
       { new: true }
     );
     if(!user) {
-      return res.status(200).json({
+      return res.status(400).json({
         data: 'User not found',
         isSucess: false
       })
@@ -178,19 +178,25 @@ router.put('/:id', auth, async (req, res) => {
 })
 
 // @route    DELETE api/user/:id
-// @desc     Update User
+// @desc     Delete User
 // @access   Private
 router.delete('/:id', auth, async (req, res) => {
   const id = req.params.id;
   try {
-    await User.findOneAndRemove({ _id: id });
+    const user = await User.findOneAndRemove({ _id: id });
+    if(!user) {
+      return res.status(400).json({
+        msg: `User not found`,
+        isSucess: false
+      })
+    }
     res.status(200).json({
       msg: 'Delete successfully!',
       isSucess: true
     })
   } catch(err) {
-    res.status(400).json({
-      msg: `Can't delete user`,
+    res.status(500).json({
+      msg: `Server Error`,
       isSucess: false
     })
   }

@@ -108,8 +108,35 @@ Body data:
     ]
 }
 
-# Get List Member
+# Get List Members
 GET  /api/member
 GET  /api/member?page=1&limit=10
 Headers: x-auth-token: {token}
+
+# Get Member
+GET  /api/member/:id
+Headers: x-auth-token: {token}
+
+# Delete Member
+DELETE  /api/member:id
+
+# Update Member
+PUT  /api/member/:id
+Headers: x-auth-token: {token}
+Body data:
+{
+  "avatar": "https://cdn.fakercloud.com/avatars/ManikRathee_128.jpg",
+  "firstName": "Larry",
+  "lastName": "Steve",
+  "email": "Larry@gmail.com",
+  "position": "Web Developer",
+  "dateJoin": "2020-02-20",
+  "location": [
+    {
+      "address": "140 Dang Van Ngu",
+      "district": "phunhuan",
+      "city": "hcm"
+    },
+  ]
+}
 ```

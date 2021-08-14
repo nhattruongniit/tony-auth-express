@@ -72,4 +72,95 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
+// @route    GET api/member/:id
+// @desc     GET Member
+// @access   Private
+router.get('/:id', auth, async (req, res) => {
+  const id = req.params.id;
+  try {
+    const member = await Member.findById(id);
+    res.status(200).json({
+      data: member,
+      isSucess: true
+    })
+  } catch(err) {
+    res.status(400).json({
+      msg: 'User not found',
+      isSucess: false
+    })
+  }
+})
+
+// @route    PUT api/member
+// @desc     Update Member
+// @access   Private
+router.put('/:id', auth, async (req, res) => {
+  const id = req.params.id;
+  const { avatar, firstName, lastName, email, position, dateJoin, location } = req.body;
+
+  const fields = {};
+  if (avatar) fields.avatar = avatar;
+  if (firstName) fields.firstName = firstName;
+  if (lastName) fields.lastName = lastName;
+  if (email) fields.email = email;
+  if (position) fields.position = position;
+  if (dateJoin) fields.dateJoin = dateJoin;
+  if(!location || location.length === 0) {
+    return res.status(400).json({
+      msg: 'Please fill full input',
+      isSucess: false
+    })
+  }
+  fields.location = location;
+
+  try {
+    const member = await Member.findOneAndUpdate(
+      { _id: id },
+      { $set: fields },
+      { new: true }
+    );
+    if(!member) {
+      return res.status(400).json({
+        data: 'Member not found',
+        isSucess: false
+      })
+    }
+    res.status(200).json({
+      msg: 'Update successfully!',
+      isSucess: true
+    })
+  } catch(err) {
+    res.status(500).json({
+      msg: `Server Error`,
+      isSucess: false
+    })
+  }
+})
+
+// @route    DELETE api/member
+// @desc     Delete member
+// @access   Private
+router.delete('/:id', auth, async (req, res) => {
+  const memberId = req.params.id;
+  
+  try {
+    const member = await Member.findOneAndRemove({ _id: memberId });
+    if(!member) {
+      return res.status(400).json({
+        msg: `Member not found`,
+        isSucess: false
+      })
+    }
+    res.status(200).json({
+      msg: 'Delete successfully!',
+      isSucess: true
+    })
+  } catch(err) {
+    res.status(500).json({
+      msg: `Server Error`,
+      isSucess: false
+    })
+  }
+})
+
 module.exports = router;
