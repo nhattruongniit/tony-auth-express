@@ -8,6 +8,7 @@ const authRoute = require('./routes/auth');
 const usersRoute = require('./routes/users');
 const membersRoute = require('./routes/members');
 const photosRoute = require('./routes/photos');
+const todosRoute = require('./routes/todos');
 
 dotenv.config();
 app.use(cors());
@@ -37,6 +38,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/user', usersRoute);
 app.use('/api/member', membersRoute);
 app.use('/api/photo', photosRoute);
+app.use('/api/todo', todosRoute);
 
 app.listen(PORT, () => {
   console.log(`Server Up and running localhost: ${PORT}`)

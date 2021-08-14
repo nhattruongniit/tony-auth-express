@@ -5,15 +5,15 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../middlewares/auth');
 
 // model
-const Photo = require('../model/Photo');
+const Todo = require('../model/Todo');
 
-// @route    POST api/photo
-// @desc     Add new photo
+// @route    POST api/todo
+// @desc     Add new todo
 // @access   Private
 router.post('/', [auth, 
-  check('image', 'Image is required').not().isEmpty(),
   check('title', 'Title is required').not().isEmpty(),
-  check('category', 'Category is required').not().isEmpty(),
+  check('author', 'Author is required').not().isEmpty(),
+  check('severity', 'Severity is required').not().isEmpty(),
   check('description', 'Description is required').not().isEmpty(),
 ], async (req, res) => {
   const errors = validationResult(req);
@@ -21,18 +21,19 @@ router.post('/', [auth,
     return res.status(400).json({ errors: errors.array() })
   }
 
-  const { image, title, category, description } = req.body;
-  const newPhoto = new Photo({
-    image,
+  const { title, author, severity, description } = req.body;
+  const newTodo = new Todo({
     title,
-    category,
+    author,
+    severity,
     description,
+    status: 'new'
   })
 
   try {
-    const photo = await newPhoto.save();
+    const todo = await newTodo.save();
     res.status(200).json({
-      data: photo,
+      data: todo,
       isSucess: true
     })
   } catch(err) {
@@ -43,8 +44,8 @@ router.post('/', [auth,
   }
 })
 
-// @route    GET api/photo
-// @desc     Get photo list
+// @route    GET api/todo
+// @desc     Get todo list
 // @access   Private
 router.get('/', auth, async (req, res) => {
   const page = parseInt(req.query.page || 1);
@@ -53,10 +54,10 @@ router.get('/', auth, async (req, res) => {
   const endOffset = startOffset + limit;
   
   try {
-    const photos = await Photo.find().sort({ data: -1 });
-    const total = photos.length;
+    const todos = await Todo.find().sort({ data: -1 });
+    const total = todos.length;
     const result = {
-      data: photos,
+      data: todos,
       page,
       limit,
       total,
@@ -64,7 +65,7 @@ router.get('/', auth, async (req, res) => {
     };
     if(total === 0) return res.status(200).json(result);
 
-    result.data = photos.slice(startOffset, endOffset)
+    result.data = todos.slice(startOffset, endOffset)
     res.status(200).json(result)
   } catch(err) {
     res.status(500).json({
@@ -74,32 +75,32 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
-// @route    GET api/photo/:id
-// @desc     GET Photo
+// @route    GET api/todo/:id
+// @desc     GET Todo
 // @access   Private
 router.get('/:id', auth, async (req, res) => {
   const id = req.params.id;
   try {
-    const photo = await Photo.findById(id);
+    const todo = await Todo.findById(id);
     res.status(200).json({
-      data: photo,
+      data: todo,
       isSucess: true
     })
   } catch(err) {
     res.status(400).json({
-      msg: 'Photo not found',
+      msg: 'Todo not found',
       isSucess: false
     })
   }
 })
 
-// @route    PUT api/photo
-// @desc     Update Photo
+// @route    PUT api/todo
+// @desc     Update Todo
 // @access   Private
 router.put('/:id', [auth, 
-  check('image', 'Image is required').not().isEmpty(),
   check('title', 'Title is required').not().isEmpty(),
-  check('category', 'Category is required').not().isEmpty(),
+  check('author', 'Author is required').not().isEmpty(),
+  check('severity', 'Severity is required').not().isEmpty(),
   check('description', 'Description is required').not().isEmpty(),
 ], async (req, res) => {
   const errors = validationResult(req);
@@ -108,23 +109,30 @@ router.put('/:id', [auth,
   }
 
   const id = req.params.id;
-  const { image, title, category, description } = req.body;
+  const { title, author, severity, description, status } = req.body;
 
   const fields = {};
-  if (image) fields.image = image;
   if (title) fields.title = title;
-  if (category) fields.category = category;
+  if (author) fields.author = author;
+  if (severity) fields.severity = severity;
   if (description) fields.description = description;
+  if (!status) {
+    return res.status(400).json({
+      data: 'Please choose status',
+      isSucess: false
+    })
+  }
+  fields.status = status;
 
   try {
-    const photo = await Photo.findOneAndUpdate(
+    const todo = await Todo.findOneAndUpdate(
       { _id: id },
       { $set: fields },
       { new: true }
     );
-    if(!photo) {
+    if(!todo) {
       return res.status(400).json({
-        data: 'Photo not found',
+        data: 'Todo not found',
         isSucess: false
       })
     }
@@ -140,17 +148,17 @@ router.put('/:id', [auth,
   }
 })
 
-// @route    DELETE api/photo
-// @desc     Delete photo
+// @route    DELETE api/todo
+// @desc     Delete todo
 // @access   Private
 router.delete('/:id', auth, async (req, res) => {
   const photoId = req.params.id;
   
   try {
-    const photo = await Photo.findOneAndRemove({ _id: photoId });
-    if(!photo) {
+    const todo = await Todo.findOneAndRemove({ _id: photoId });
+    if(!todo) {
       return res.status(400).json({
-        msg: `Photo not found`,
+        msg: `Todo not found`,
         isSucess: false
       })
     }

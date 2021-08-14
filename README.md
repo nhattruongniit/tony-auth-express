@@ -178,3 +178,42 @@ Body data:
   "category": "sports"
 }
 ```
+
+### Todos
+
+```bash
+# Add New Todo
+POST  /api/todo
+Headers: x-auth-token: {token}
+Body data:
+{
+  "title": "Learn React",
+  "author": "Tony Nguyen",
+  "severity": "low",
+  "description": "Lizards are a widespread group"
+}
+
+# Get List Todos
+GET  /api/todo
+GET  /api/todo?page=1&limit=10
+Headers: x-auth-token: {token}
+
+# Get Todo
+GET  /api/todo/:id
+Headers: x-auth-token: {token}
+
+# Delete Todo
+DELETE  /api/todo:id
+
+# Update Todo
+PUT  /api/todo/:id
+Headers: x-auth-token: {token}
+Body data:
+{
+  "title": "Learn React",
+  "author": "Tony Nguyen",
+  "severity": "low",
+  "description": "Lizards are a widespread group",
+  "status": "medium
+}
+```

@@ -98,7 +98,7 @@ router.get('/:id', auth, async (req, res) => {
     })
   } catch(err) {
     res.status(400).json({
-      msg: 'User not found',
+      msg: 'Member not found',
       isSucess: false
     })
   }
