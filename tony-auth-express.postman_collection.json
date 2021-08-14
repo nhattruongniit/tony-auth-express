@@ -1,0 +1,466 @@
+{
+	"info": {
+		"_postman_id": "caa54438-9b48-49a5-808c-2b4478833f85",
+		"name": "tony-auth-express",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"avatar\": \"https://cdn.fakercloud.com/avatars/ManikRathee_128.jpg\",\n    \"firstName\": \"Mani\",\n    \"lastName\": \"Rathee\",\n    \"email\": \"nhattruongniit@gmail.com\",\n    \"role\": \"operator\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4MzQyNDMwLCJleHAiOjE2MjgzNzg0MzB9.PdM7cOgKLfxGaktHOETY7G_hITrjB-1PWHdRJASjB6o",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"operator\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/api/user/610e86805001c206df7d95fb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"user",
+								"610e86805001c206df7d95fb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4OTE0ODAyLCJleHAiOjE2Mjg5NTA4MDJ9.Tp_5qKfDwlaPbntgYsvflOlOkTG4TC4yoi16fhXS8f0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3002/api/user/610e6f608879150015cfd4cf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"user",
+								"610e6f608879150015cfd4cf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4OTE0ODAyLCJleHAiOjE2Mjg5NTA4MDJ9.Tp_5qKfDwlaPbntgYsvflOlOkTG4TC4yoi16fhXS8f0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3002/api/user?page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4MzQyNDMwLCJleHAiOjE2MjgzNzg0MzB9.PdM7cOgKLfxGaktHOETY7G_hITrjB-1PWHdRJASjB6o",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/api/user/610e86805001c206df7d95fb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"user",
+								"610e86805001c206df7d95fb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwZTg2ODA1MDAxYzIwNmRmN2Q5NWZiIiwiZmlyc3ROYW1lIjoiTWFuaSIsImxhc3ROYW1lIjoiUmF0aGVlIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJuaGF0dHJ1b25nbmlpdEBnbWFpbC5jb20iLCJyb2xlIjoib3BlcmF0b3IifSwiaWF0IjoxNjI4MzQxOTU4LCJleHAiOjE2MjgzNzc5NTh9.ajsV_AIi9JtEq8Fee4beg7lC_-ujjfG9HzEDmmzvi2k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3002/api/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Member",
+			"item": [
+				{
+					"name": "Add Member",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4OTE0ODAyLCJleHAiOjE2Mjg5NTA4MDJ9.Tp_5qKfDwlaPbntgYsvflOlOkTG4TC4yoi16fhXS8f0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"avatar\": \"https://cdn.fakercloud.com/avatars/ManikRathee_128.jpg\",\n    \"firstName\": \"Donna\",\n    \"lastName\": \"Hiti\",\n    \"email\": \"donna@gmail.com\",\n    \"position\": \"Front End Engineer\",\n    \"dateJoin\": \"2020-02-20\",\n    \"location\": [\n        {\n            \"address\": \"140 Dang Van Ngu\",\n            \"district\": \"phunhuan\",\n            \"city\": \"hcm\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/api/member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List Member",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4OTE0ODAyLCJleHAiOjE2Mjg5NTA4MDJ9.Tp_5qKfDwlaPbntgYsvflOlOkTG4TC4yoi16fhXS8f0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3002/api/member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Member",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4OTE0ODAyLCJleHAiOjE2Mjg5NTA4MDJ9.Tp_5qKfDwlaPbntgYsvflOlOkTG4TC4yoi16fhXS8f0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3002/api/member/611748b20eb2ec18f0b2ce13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"member",
+								"611748b20eb2ec18f0b2ce13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Member",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4OTE1MDU5LCJleHAiOjE2Mjg5NTEwNTl9.N2nI38eFr9DAeOz1d1Dyb6t6oyTxArOZnu75cQQzYj8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/api/member/61174e44a001c51c7f3dfcbd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"member",
+								"61174e44a001c51c7f3dfcbd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Member",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4OTE0ODAyLCJleHAiOjE2Mjg5NTA4MDJ9.Tp_5qKfDwlaPbntgYsvflOlOkTG4TC4yoi16fhXS8f0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"avatar\": \"https://cdn.fakercloud.com/avatars/ManikRathee_128.jpg\",\n    \"firstName\": \"Larry\",\n    \"lastName\": \"Steve\",\n    \"email\": \"Larry@gmail.com\",\n    \"position\": \"Web Developer\",\n    \"dateJoin\": \"2020-02-20\",\n    \"location\": [\n        {\n            \"address\": \"140 Dang Van Ngu\",\n            \"district\": \"phunhuan\",\n            \"city\": \"hcm\"\n        },\n         {\n            \"address\": \"200 Huynh Van Banh\",\n            \"district\": \"tanbinh\",\n            \"city\": \"hcm\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/api/member/611748b20eb2ec18f0b2ce13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"member",
+								"611748b20eb2ec18f0b2ce13"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Photo",
+			"item": [
+				{
+					"name": "Add Photo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4OTE0ODAyLCJleHAiOjE2Mjg5NTA4MDJ9.Tp_5qKfDwlaPbntgYsvflOlOkTG4TC4yoi16fhXS8f0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"image\": \"https://cdn.fakercloud.com/avatars/ManikRathee_128.jpg\",\n  \"title\": \"Sport 2\",\n  \"description\": \"Lizards are a widespread group of squamate reptiles\",\n  \"category\": \"sports\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/api/photo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"photo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List Photo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEwOGM0YWVjYmJiMzYzMTkzNzlkOTZiIiwiZmlyc3ROYW1lIjoiVG9ueSIsImxhc3ROYW1lIjoiTmd1eWVuIiwiYXZhdGFyIjoiaHR0cHM6Ly9jZG4uZmFrZXJjbG91ZC5jb20vYXZhdGFycy9NYW5pa1JhdGhlZV8xMjguanBnIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNjI4OTE0ODAyLCJleHAiOjE2Mjg5NTA4MDJ9.Tp_5qKfDwlaPbntgYsvflOlOkTG4TC4yoi16fhXS8f0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3002/api/photo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"api",
+								"photo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
