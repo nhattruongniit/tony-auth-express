@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const authRoute = require('./routes/auth');
 const usersRoute = require('./routes/users');
 const membersRoute = require('./routes/members');
+const photosRoute = require('./routes/photos');
 
 dotenv.config();
 app.use(cors());
@@ -35,6 +36,7 @@ app.get('/', (_, res) => res.send('API running'));
 app.use('/api/auth', authRoute);
 app.use('/api/user', usersRoute);
 app.use('/api/member', membersRoute);
+app.use('/api/photo', photosRoute);
 
 app.listen(PORT, () => {
   console.log(`Server Up and running localhost: ${PORT}`)

@@ -140,3 +140,41 @@ Body data:
   ]
 }
 ```
+
+### Photos
+
+```bash
+# Add New Photo
+POST  /api/photo
+Headers: x-auth-token: {token}
+Body data:
+{
+  "image": "https://cdn.fakercloud.com/avatars/ManikRathee_128.jpg",
+  "title": "Sport 2",
+  "description": "Lizards are a widespread group of squamate reptiles",
+  "category": "sports"
+}
+
+# Get List Photos
+GET  /api/photo
+GET  /api/photo?page=1&limit=10
+Headers: x-auth-token: {token}
+
+# Get Photo
+GET  /api/photo/:id
+Headers: x-auth-token: {token}
+
+# Delete Photo
+DELETE  /api/photo:id
+
+# Update Photo
+PUT  /api/photo/:id
+Headers: x-auth-token: {token}
+Body data:
+{
+  "image": "https://cdn.fakercloud.com/avatars/ManikRathee_128.jpg",
+  "title": "Sport 4",
+  "description": "Lizards are a widespread group of squamate reptiles",
+  "category": "sports"
+}
+```

@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { check, validationResult } = require('express-validator');
 
 // middleware
 const auth = require('../middlewares/auth');
@@ -9,7 +10,19 @@ const Member = require('../model/Member');
 // @route    POST api/member
 // @desc     Add new member
 // @access   Private
-router.post('/', auth, async (req, res) => {
+router.post('/', [auth,
+  check('avatar', 'Avatar is required').not().isEmpty(),
+  check('firstName', 'FirstName is required').not().isEmpty(),
+  check('lastName', 'LastName is required').not().isEmpty(),
+  check('position', 'Position is required').not().isEmpty(),
+  check('dateJoin', 'DateJoin is required').not().isEmpty(),
+  check('location', 'Location is required').not().isEmpty(),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
   const { avatar, firstName, lastName, email, position, dateJoin, location } = req.body;
   if(!location || location.length === 0) {
     return res.status(400).json({
