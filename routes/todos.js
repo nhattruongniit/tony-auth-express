@@ -34,6 +34,7 @@ router.post('/', [auth,
     const todo = await newTodo.save();
     res.status(200).json({
       data: todo,
+      msg: 'Add successfully!',
       isSucess: true
     })
   } catch(err) {

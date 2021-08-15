@@ -33,6 +33,7 @@ router.post('/', [auth,
     const photo = await newPhoto.save();
     res.status(200).json({
       data: photo,
+      msg: 'Add successfully!',
       isSucess: true
     })
   } catch(err) {

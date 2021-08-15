@@ -44,6 +44,7 @@ router.post('/', [auth,
     const member = await newNember.save();
     res.status(200).json({
       data: member,
+      msg: 'Add successfully!',
       isSucess: true
     })
   } catch(err) {
