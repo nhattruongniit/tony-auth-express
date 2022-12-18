@@ -1,3 +1,10 @@
 {
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
+  "version": 2,
+  "name": "tony-auth-express",
+  "builds": [
+     { "src": "index.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+     { "src": "/api/(.*)", "dest": "/index.js" }
+  ]
 }
