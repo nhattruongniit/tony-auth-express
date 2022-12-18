@@ -12,6 +12,7 @@ const todosRoute = require('./routes/todos');
 
 dotenv.config();
 app.use(cors());
+app.use(express.static('public'))
 
 // env  
 const PORT = process.env.PORT || 3000;
