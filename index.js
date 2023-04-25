@@ -18,17 +18,15 @@ app.use(express.static('public'))
 const PORT = process.env.PORT || 3000;
 
 // connect to DB
-mongoose.connect(
-  process.env.DB_CONNECT,
-  { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true,
-    useFindAndModify: false
-  },
-  () => {
-    console.log('connect to DB')
-  }
-)
+mongoose
+  .connect(
+    process.env.DB_CONNECT, 
+    {
+      useNewUrlParser: true,
+    }
+  )
+  .catch((error) => console.log("Connect Fail: ", error));
+
 
 // middlewares
 app.use(express.json({ extend: true }));
