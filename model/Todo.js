@@ -6,7 +6,7 @@ const todoSchema = new mongoose.Schema({
     require: true,
   },
   author: {
-    type: String,
+    type: Array,
     required: true,
   },
   severity: {
