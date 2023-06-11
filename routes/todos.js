@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { check, validationResult } = require('express-validator');
 
 // middleware
-const auth = require('../middlewares/auth');
+// const auth = require('../middlewares/auth');
 
 // model
 const Todo = require('../model/Todo');
@@ -10,7 +10,7 @@ const Todo = require('../model/Todo');
 // @route    POST api/todo
 // @desc     Add new todo
 // @access   Private
-router.post('/', [auth, 
+router.post('/', [ 
   check('title', 'Title is required').not().isEmpty(),
   check('author', 'Author is required').not().isEmpty(),
   check('severity', 'Severity is required').not().isEmpty(),
@@ -48,7 +48,7 @@ router.post('/', [auth,
 // @route    GET api/todo
 // @desc     Get todo list
 // @access   Private
-router.get('/', auth, async (req, res) => {
+router.get('/',  async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const limit = parseInt(req.query.limit || 10);
   const startOffset = (page - 1) * limit;
@@ -79,7 +79,7 @@ router.get('/', auth, async (req, res) => {
 // @route    GET api/todo/:id
 // @desc     GET Todo
 // @access   Private
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', async (req, res) => {
   const id = req.params.id;
   try {
     const todo = await Todo.findById(id);
@@ -98,7 +98,7 @@ router.get('/:id', auth, async (req, res) => {
 // @route    PUT api/todo
 // @desc     Update Todo
 // @access   Private
-router.put('/:id', [auth, 
+router.put('/:id', [
   check('title', 'Title is required').not().isEmpty(),
   check('author', 'Author is required').not().isEmpty(),
   check('severity', 'Severity is required').not().isEmpty(),
@@ -152,7 +152,7 @@ router.put('/:id', [auth,
 // @route    DELETE api/todo
 // @desc     Delete todo
 // @access   Private
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const photoId = req.params.id;
   
   try {
