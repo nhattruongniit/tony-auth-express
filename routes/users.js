@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+
+// helpers
+const { generateAccessToken, generateRefreshToken } = require('../helpers');
 
 // middleware
 const auth = require('../middlewares/auth');
@@ -8,7 +11,7 @@ const auth = require('../middlewares/auth');
 // model
 const User = require('../model/User');
 
-// @route    POST api/user/login
+// @route    POST api/user/register
 // @desc     Register user
 // @access   Public
 router.post('/register', async (req, res) => {
@@ -79,19 +82,58 @@ router.post('/login', async (req, res) => {
     }
   }
 
-  jwt.sign(
-    payload, 
-    process.env.TOKEN_SECRET,
-    { expiresIn: 36000 },
-    (err, token) => {
-      if (err) throw err;
-      res.header('x-auth-token', token).json({
-        token,
-        msg: 'Login Successfully!',
-        isSucess: true
-      });
-    } 
-  );
+  const access_token = generateAccessToken(payload);
+  const refresh_token = generateRefreshToken(payload);
+
+  res.header('x-auth-token', access_token).json({
+    msg: 'Login Successfully!',
+    isSucess: true,
+    data: {
+      access_token,
+      refresh_token
+    }
+  });
+})
+
+// @route    GET api/user/refresh-token
+// @desc     Refresh token
+// @access   Public
+router.post('/refresh-token', async (req, res) => {
+  const refreshToken = req.body.refresh_token;
+  if(refreshToken) {
+    jwt.verify(
+      refreshToken, 
+      process.env.TOKEN_SECRET,
+      (err, user) => {
+        if(err) {
+          res.status(404).json({
+            msg: 'No Authenticate',
+            isSucess: false
+          })
+          return
+        }
+        // create and assign a token
+        const payload = {
+          user
+        }
+        const newAccessToken = generateAccessToken(payload);
+        res.status(200).json({
+          msg: 'Refresh token successfully!',
+          isSucess: true,
+          data: {
+            access_token: newAccessToken
+          }
+        })
+      }
+    );
+
+    return;
+  }
+
+  res.status(400).json({
+    msg: 'No Refresh Token',
+    isSucess: false,
+  })
 })
 
 // @route    GET api/user
