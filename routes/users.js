@@ -1,28 +1,29 @@
-const router = require('express').Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const router = require("express").Router();
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // helpers
-const { generateAccessToken, generateRefreshToken } = require('../helpers');
+const { generateAccessToken, generateRefreshToken } = require("../helpers");
 
 // middleware
-const auth = require('../middlewares/auth');
+const auth = require("../middlewares/auth");
 
 // model
-const User = require('../model/User');
+const User = require("../model/User");
 
 // @route    POST api/user/register
 // @desc     Register user
 // @access   Public
-router.post('/register', async (req, res) => {
-  const { firstName, lastName, avatar, email, role, password } = req.body;
+router.post("/register", async (req, res) => {
+  const { firstName, lastName, avatar, email, role, password } = req.body.data;
 
   // check email exist
   const emailExist = await User.findOne({ email: email });
-  if(emailExist) return res.status(400).json({
-    msg: 'Email already exists',
-    isSucess: false
-  });
+  if (emailExist)
+    return res.status(400).json({
+      msg: "Email already exists",
+      isSucess: false,
+    });
 
   // hash password
   const salt = await bcrypt.genSalt(10);
@@ -34,41 +35,43 @@ router.post('/register', async (req, res) => {
     lastName,
     email,
     role,
-    password: hashPassword
+    password: hashPassword,
   });
   try {
     await user.save();
-    res.json({ 
-      msg: 'Register Successfully!',
-      isSucess: true
+    res.json({
+      msg: "Register Successfully!",
+      isSucess: true,
     });
-  } catch(err) {
+  } catch (err) {
     res.status(400).json({
       msg: err,
-      isSucess: false
+      isSucess: false,
     });
   }
-})
+});
 
 // @route    POST api/user/login
 // @desc     Login user
 // @access   Public
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body.data;
 
   // check email exist
   const user = await User.findOne({ email });
-  if(!user) return res.status(400).json({
-    msg: 'Email or password is wrong',
-    isSucess: false
-  });
+  if (!user)
+    return res.status(400).json({
+      msg: "Email or password is wrong",
+      isSucess: false,
+    });
 
   // valid password
   const validPass = await bcrypt.compare(password, user.password);
-  if(!validPass) return res.status(400).json({
-    msg: 'Email or password is wrong',
-    isSucess: false
-  });
+  if (!validPass)
+    return res.status(400).json({
+      msg: "Email or password is wrong",
+      isSucess: false,
+    });
 
   // create and assign a token
   const payload = {
@@ -78,120 +81,116 @@ router.post('/login', async (req, res) => {
       lastName: user.lastName,
       avatar: user.avatar,
       email: user.email,
-      role: user.role
-    }
-  }
+      role: user.role,
+    },
+  };
 
   const access_token = generateAccessToken(payload);
   const refresh_token = generateRefreshToken(payload);
 
-  res.header('x-auth-token', access_token).json({
-    msg: 'Login Successfully!',
+  res.header("x-auth-token", access_token).json({
+    msg: "Login Successfully!",
     isSucess: true,
     data: {
       access_token,
-      refresh_token
-    }
+      refresh_token,
+    },
   });
-})
+});
 
 // @route    GET api/user/refresh-token
 // @desc     Refresh token
 // @access   Public
-router.post('/refresh-token', async (req, res) => {
-  const refreshToken = req.body.refresh_token;
-  if(refreshToken) {
-    jwt.verify(
-      refreshToken, 
-      process.env.TOKEN_SECRET,
-      (err, user) => {
-        if(err) {
-          res.status(404).json({
-            msg: 'No Authenticate',
-            isSucess: false
-          })
-          return
-        }
-        // create and assign a token
-        const payload = {
-          user
-        }
-        const newAccessToken = generateAccessToken(payload);
-        res.status(200).json({
-          msg: 'Refresh token successfully!',
-          isSucess: true,
-          data: {
-            access_token: newAccessToken
-          }
-        })
+router.post("/refresh-token", async (req, res) => {
+  const refreshToken = req.body.data.refresh_token;
+  if (refreshToken) {
+    jwt.verify(refreshToken, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        res.status(404).json({
+          msg: "No Authenticate",
+          isSucess: false,
+        });
+        return;
       }
-    );
+      // create and assign a token
+      const payload = {
+        user,
+      };
+      const newAccessToken = generateAccessToken(payload);
+      res.status(200).json({
+        msg: "Refresh token successfully!",
+        isSucess: true,
+        data: {
+          access_token: newAccessToken,
+        },
+      });
+    });
 
     return;
   }
 
   res.status(400).json({
-    msg: 'No Refresh Token',
+    msg: "No Refresh Token",
     isSucess: false,
-  })
-})
+  });
+});
 
 // @route    GET api/user
 // @desc     Get user list
 // @access   Private
-router.get('/', auth, async (req, res) => {
-  const page = parseInt(req.query.page || 1)
-  const limit = parseInt(req.query.limit || 10)
+router.get("/", auth, async (req, res) => {
+  const page = parseInt(req.query.page || 1);
+  const limit = parseInt(req.query.limit || 10);
   const startOffset = (page - 1) * limit;
   const endOffset = startOffset + limit;
 
   try {
-    const users = await User.find().sort({ data: -1 })
+    const users = await User.find().sort({ data: -1 });
     const total = users.length;
     const result = {
       data: users,
       page,
       limit,
       total,
-      isSucess: true
+      isSucess: true,
     };
-    if(total === 0) return res.status(200).json(result);
+    if (total === 0) return res.status(200).json(result);
 
-    result.data = users.slice(startOffset, endOffset)
-    res.status(200).json(result)
-  } catch(err) {
+    result.data = users.slice(startOffset, endOffset);
+    res.status(200).json(result);
+  } catch (err) {
     res.status(500).json({
-      msg: 'Server Error',
-      isSucess: false
-    })
+      msg: "Server Error",
+      isSucess: false,
+    });
   }
-})
+});
 
 // @route    GET api/user/:id
 // @desc     GET User
 // @access   Private
-router.get('/:id', auth, async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   const id = req.params.id;
   try {
     const user = await User.findById(id);
     res.status(200).json({
       data: user,
-      isSucess: true
-    })
-  } catch(err) {
+      isSucess: true,
+    });
+  } catch (err) {
     res.status(400).json({
-      msg: 'User not found',
-      isSucess: false
-    })
+      msg: "User not found",
+      isSucess: false,
+    });
   }
-})
+});
 
 // @route    PUT api/user
 // @desc     Update User
 // @access   Private
-router.put('/:id', auth, async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const id = req.params.id;
-  const role = req.body.role;
+  const role = req.body.data.role;
 
   const profile = {};
   if (role) profile.role = role;
@@ -202,47 +201,47 @@ router.put('/:id', auth, async (req, res) => {
       { $set: profile },
       { new: true }
     );
-    if(!user) {
+    if (!user) {
       return res.status(400).json({
-        data: 'User not found',
-        isSucess: false
-      })
+        data: "User not found",
+        isSucess: false,
+      });
     }
     res.status(200).json({
-      msg: 'Update successfully!',
-      isSucess: true
-    })
-  } catch(err) {
+      msg: "Update successfully!",
+      isSucess: true,
+    });
+  } catch (err) {
     res.status(400).json({
       msg: `Can't update user`,
-      isSucess: false
-    })
+      isSucess: false,
+    });
   }
-})
+});
 
 // @route    DELETE api/user/:id
 // @desc     Delete User
 // @access   Private
-router.delete('/:id', auth, async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;
   try {
     const user = await User.findOneAndRemove({ _id: id });
-    if(!user) {
+    if (!user) {
       return res.status(400).json({
         msg: `User not found`,
-        isSucess: false
-      })
+        isSucess: false,
+      });
     }
     res.status(200).json({
-      msg: 'Delete successfully!',
-      isSucess: true
-    })
-  } catch(err) {
+      msg: "Delete successfully!",
+      isSucess: true,
+    });
+  } catch (err) {
     res.status(500).json({
       msg: `Server Error`,
-      isSucess: false
-    })
+      isSucess: false,
+    });
   }
-})
+});
 
 module.exports = router;
