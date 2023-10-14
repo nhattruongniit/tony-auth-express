@@ -17,9 +17,9 @@ router.post('/', async (req, res) => {
       isSuccess: true
     })
   } catch(err) {
-    res.status(400).json({
-      msg: 'Invalid Token',
-      isSuccess: false
+    return res.status(403).json({
+      msg: "Access Denied",
+      isSucess: false,
     })
   }
 })
