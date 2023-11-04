@@ -4,11 +4,11 @@ const app = express();
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 // routes
-const authRoute = require('./routes/auth');
-const usersRoute = require('./routes/users');
-const membersRoute = require('./routes/members');
-const photosRoute = require('./routes/photos');
-const todosRoute = require('./routes/todos');
+const authRoute = require('./src/routes/auth');
+const usersRoute = require('./src/routes/users.route');
+const membersRoute = require('./src/routes/members');
+const photosRoute = require('./src/routes/photos');
+const todosRoute = require('./src/routes/todos');
 
 dotenv.config();
 app.use(cors());
