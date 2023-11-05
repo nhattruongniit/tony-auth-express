@@ -215,5 +215,5 @@ module.exports = {
       msg: "No Refresh Token",
       isSucess: false,
     });
-  }
+  },
 }

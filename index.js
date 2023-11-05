@@ -10,6 +10,7 @@ const membersRoute = require('./src/routes/members');
 const photosRoute = require('./src/routes/photos');
 const todosRoute = require('./src/routes/todos');
 
+
 dotenv.config();
 app.use(cors());
 app.use(express.static('public'))
@@ -29,6 +30,7 @@ mongoose
 
 
 app.use(express.json({ extend: true }));
+app.use(express.urlencoded({ extended: true }));
 app.get('/', (_, res) => res.send('API running'));
 
 // route
