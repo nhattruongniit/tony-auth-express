@@ -28,11 +28,10 @@ mongoose
   .catch((error) => console.log("Connect Fail: ", error));
 
 
-// middlewares
 app.use(express.json({ extend: true }));
 app.get('/', (_, res) => res.send('API running'));
 
-// route middleware
+// route
 app.use('/api/auth', authRoute);
 app.use('/api/user', usersRoute);
 app.use('/api/member', membersRoute);
