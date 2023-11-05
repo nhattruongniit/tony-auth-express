@@ -3,6 +3,8 @@ const cors = require('cors')
 const app = express();
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const cloudinary = require('cloudinary').v2;
+
 // routes
 const authRoute = require('./src/routes/auth');
 const usersRoute = require('./src/routes/users.route');
@@ -14,6 +16,13 @@ const todosRoute = require('./src/routes/todos');
 dotenv.config();
 app.use(cors());
 app.use(express.static('public'))
+
+// cloudinary
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // env  
 const PORT = process.env.PORT || 3000;
