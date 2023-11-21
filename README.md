@@ -17,7 +17,7 @@ $ npm run dev
 
 ## API
 
-https://tony-auth-express.herokuapp.com
+https://tony-auth-express.vercel.app/
 
 Get fake avatar url:
 
