@@ -50,17 +50,17 @@ Body data:
   password: xxx,
 }
 
-# Register User
-POST  /api/user/register
+# Signup User
+POST  /api/user/signup
 Content-Type: application/json
 Body data:
 {
-  avatar: xxx,
-  firstName: xxx,
-  lastName: xxx,
-  email: xxx,
+  avatar: '...',
+  firstName: '...',
+  lastName:'...',
+  email: '...',
   role: 'operator',
-  password: xxx,
+  password: '...',
 }
 
 # Get List Users
