@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { check, validationResult } = require("express-validator");
+const userService = require("../services/users.service");
 
 // middleware
 // const auth = require('../middlewares/auth');
@@ -19,10 +20,28 @@ router.post(
     check("description", "Description is required").not().isEmpty(),
   ],
   async (req, res) => {
-    const errors = validationResult(req.body.data);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+    try {
+      const errors = validationResult(req.body.data);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+    } catch (err) {
+      res.status(400).json({
+        msg: `Syntax Error`,
+        isSucess: false,
+      });
+      return
     }
+
+    // const email = req.header("email");
+    // const user = await userService.findEmail(email);
+    // if(!user) {
+    //   res.status(400).json({
+    //     msg: "Email not found",
+    //     isSucess: false,
+    //   });
+    //   return
+    // }
 
     const { title, author, severity, description } = req.body.data;
     const newTodo = new Todo({
@@ -54,7 +73,7 @@ router.post(
 // @access   Private
 router.get("/", async (req, res) => {
   const page = parseInt(req.query.page || 1);
-  const limit = parseInt(req.query.limit || 10);
+  const limit = parseInt(req.query.limit || 50);
   const startOffset = (page - 1) * limit;
   const endOffset = startOffset + limit;
 
