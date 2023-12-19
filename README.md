@@ -203,7 +203,7 @@ GET  /api/todo/:id
 Headers: x-auth-token: {token}
 
 # Delete Todo
-DELETE  /api/todo:id
+DELETE  /api/todo/:id
 
 # Update Todo
 PUT  /api/todo/:id
