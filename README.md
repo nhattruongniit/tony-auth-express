@@ -44,45 +44,52 @@ Headers: x-auth-token: {token}
 # Login User
 POST  /api/user/login
 Content-Type: application/json
-Body data:
+Body
 {
-  email: xxx,
-  password: xxx,
+  "data": {
+    email: xxx,
+    password: xxx,
+  }
 }
 
 # Signup User
 POST  /api/user/signup
 Content-Type: application/json
-Body data:
+Body
 {
-  avatar: '...',
-  firstName: '...',
-  lastName:'...',
-  email: '...',
-  role: 'operator',
-  password: '...',
+  "data": {
+    avatar: '...',
+    firstName: '...',
+    lastName:'...',
+    email: '...',
+    role: 'operator',
+    password: '...',
+  }
 }
 
 # Get List Users
 GET  /api/user
 GET  /api/user?page=1&limit=10
-Headers: x-auth-token: {token}
 
 # Get User
 GET  /api/user/:id
-Headers: x-auth-token: {token}
 
 # Update User
 PUT  /api/user/:id
-Headers: x-auth-token: {token}
 Body data:
 {
-  role: 'operator'
+  "data": {
+    avatar: '...',
+    firstName: '...',
+    lastName:'...',
+    email: '...',
+    role: 'operator',
+    password: '...',
+  }
 }
 
 # Delete User
 DELETE  /api/user/:id
-Headers: x-auth-token: {token}
 ```
 
 ### Members
@@ -184,36 +191,39 @@ Body data:
 ```bash
 # Add New Todo
 POST  /api/todo
-Headers: x-auth-token: {token}
 Body data:
 {
-  "title": "Learn React",
-  "author": "Tony Nguyen",
-  "severity": "low",
-  "description": "Lizards are a widespread group"
+  "data": {
+    "title": "Learn React",
+    "author": "Tony Nguyen",
+    "severity": "low",
+    "description": "Lizards are a widespread group",
+    "status": "new"
+  }
 }
+
 
 # Get List Todos
 GET  /api/todo
 GET  /api/todo?page=1&limit=10
-Headers: x-auth-token: {token}
 
 # Get Todo
 GET  /api/todo/:id
-Headers: x-auth-token: {token}
 
 # Delete Todo
 DELETE  /api/todo/:id
 
 # Update Todo
 PUT  /api/todo/:id
-Headers: x-auth-token: {token}
 Body data:
 {
-  "title": "Learn React",
-  "author": "Tony Nguyen",
-  "severity": "low",
-  "description": "Lizards are a widespread group",
-  "status": "medium
+  "data": {
+    "title": "Learn React",
+    "author": "Tony Nguyen",
+    "severity": "low",
+    "description": "Lizards are a widespread group",
+    "status": "new"
+  }
 }
+
 ```

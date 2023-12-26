@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const { check, validationResult } = require("express-validator");
-const userService = require("../services/users.service");
 
 // middleware
 // const auth = require('../middlewares/auth');
@@ -27,10 +26,10 @@ router.post(
       }
     } catch (err) {
       res.status(400).json({
-        msg: `Syntax Error`,
+        msg: `Syntax Error ${err}`,
         isSucess: false,
       });
-      return
+      return;
     }
 
     // const email = req.header("email");
@@ -61,7 +60,7 @@ router.post(
       });
     } catch (err) {
       res.status(500).json({
-        msg: `Server Error`,
+        msg: `Server Error ${err}`,
         isSucess: false,
       });
     }
@@ -93,7 +92,7 @@ router.get("/", async (req, res) => {
     res.status(200).json(result);
   } catch (err) {
     res.status(500).json({
-      msg: "Server Error",
+      msg: `Server Error  ${err}`,
       isSucess: false,
     });
   }
@@ -112,7 +111,7 @@ router.get("/:id", async (req, res) => {
     });
   } catch (err) {
     res.status(400).json({
-      msg: "Todo not found",
+      msg: `Todo not found  ${err}`,
       isSucess: false,
     });
   }
@@ -145,7 +144,7 @@ router.put(
     if (description) fields.description = description;
     if (!status) {
       return res.status(400).json({
-        data: "Please choose status",
+        data: `Please choose status`,
         isSucess: false,
       });
     }
@@ -169,7 +168,7 @@ router.put(
       });
     } catch (err) {
       res.status(500).json({
-        msg: `Server Error`,
+        msg: `Server Error ${err}`,
         isSucess: false,
       });
     }
@@ -196,7 +195,7 @@ router.delete("/:id", async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      msg: `Server Error`,
+      msg: `Server Error ${err}`,
       isSucess: false,
     });
   }
