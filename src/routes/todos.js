@@ -14,7 +14,6 @@ router.post(
   "/",
   [
     check("title", "Title is required").not().isEmpty(),
-    check("author", "Author is required").not().isEmpty(),
     check("severity", "Severity is required").not().isEmpty(),
     check("description", "Description is required").not().isEmpty(),
   ],
@@ -124,12 +123,11 @@ router.put(
   "/:id",
   [
     check("title", "Title is required").not().isEmpty(),
-    check("author", "Author is required").not().isEmpty(),
     check("severity", "Severity is required").not().isEmpty(),
     check("description", "Description is required").not().isEmpty(),
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req.body.data);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
