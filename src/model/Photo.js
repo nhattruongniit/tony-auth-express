@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const photoSchema = new mongoose.Schema({
   image: {
@@ -19,8 +19,8 @@ const photoSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now
-  }
-})
+    default: Date.now,
+  },
+});
 
-module.exports = mongoose.model('Photo', photoSchema);
+module.exports = mongoose.model("Photo", photoSchema);

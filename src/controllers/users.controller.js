@@ -2,23 +2,24 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // services
-const UserService = require('../services/users.service');
+const UserService = require("../services/users.service");
 
 // helpers
 const { generateAccessToken, generateRefreshToken } = require("../helpers");
 
 module.exports = {
   signup: async (req, res) => {
-    const { firstName, lastName, avatar, email, role, password } = req.body.data;
+    const { firstName, lastName, avatar, email, role, password } =
+      req.body.data;
 
     // check email exist
-    const emailExisted = await UserService.findEmail(email)
+    const emailExisted = await UserService.findEmail(email);
     if (emailExisted)
       return res.status(400).json({
         msg: "Email already exists",
         isSucess: false,
       });
-  
+
     // hash password
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -31,7 +32,7 @@ module.exports = {
       email,
       role,
       password: hashPassword,
-    }
+    };
     try {
       await UserService.create(payload);
       res.json({
@@ -107,12 +108,12 @@ module.exports = {
         isSucess: true,
       };
       if (total === 0) return res.status(200).json(result);
-  
+
       result.data = users.slice(startOffset, endOffset);
       res.status(200).json(result);
     } catch (err) {
       res.status(500).json({
-        msg: "Server Error",
+        msg: `Server Error ${err}`,
         isSucess: false,
       });
     }
@@ -129,7 +130,7 @@ module.exports = {
       });
     } catch (err) {
       res.status(400).json({
-        msg: "User not found",
+        msg: `User not found ${err}`,
         isSucess: false,
       });
     }
@@ -138,10 +139,10 @@ module.exports = {
   updateUser: async (req, res) => {
     const id = req.params.id;
     const role = req.body.data?.role;
-  
+
     const profile = {};
     if (role) profile.role = role;
-  
+
     try {
       const user = await UserService.update(id, profile);
       if (!user) {
@@ -156,7 +157,7 @@ module.exports = {
       });
     } catch (err) {
       res.status(400).json({
-        msg: `Can't update user`,
+        msg: `Can't update user ${err}`,
         isSucess: false,
       });
     }
@@ -178,7 +179,7 @@ module.exports = {
       });
     } catch (err) {
       res.status(500).json({
-        msg: `Server Error`,
+        msg: `Server Error ${err}`,
         isSucess: false,
       });
     }
@@ -217,4 +218,4 @@ module.exports = {
       isSucess: false,
     });
   },
-}
+};
