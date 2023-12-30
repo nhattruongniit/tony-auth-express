@@ -42,7 +42,7 @@ Headers: x-auth-token: {token}
 
 ```bash
 # Login User
-POST  /api/user/login
+POST  /api/user/sigin
 Content-Type: application/json
 Body data:
 {
@@ -55,12 +55,12 @@ POST  /api/user/signup
 Content-Type: application/json
 Body data:
 {
-  avatar: '...',
-  firstName: '...',
-  lastName:'...',
-  email: '...',
+  avatar: 'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/00/009d272e2b496aa0758a86a17eac5f7716a99133_full.jpg',
+  firstName: 'Tony',
+  lastName:'Nguyen',
+  email: 'tony@gmail.com',
   role: 'operator',
-  password: '...',
+  password: '123456',
 }
 
 # Get List Users

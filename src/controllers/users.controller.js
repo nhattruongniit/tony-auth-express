@@ -122,6 +122,7 @@ module.exports = {
     const id = req.params.id;
     try {
       const user = await UserService.findOne(id);
+      // user._doc; // get all data except password
       res.status(200).json({
         data: user,
         isSucess: true,
