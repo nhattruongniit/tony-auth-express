@@ -1,19 +1,14 @@
 const router = require("express").Router();
 const { check, validationResult } = require("express-validator");
 
-// middleware
-const auth = require("../middlewares/auth");
-
 // model
 const Member = require("../model/Member");
 
 // @route    POST api/member
 // @desc     Add new member
-// @access   Private
 router.post(
   "/",
   [
-    auth,
     check("avatar", "Avatar is required").not().isEmpty(),
     check("firstName", "FirstName is required").not().isEmpty(),
     check("lastName", "LastName is required").not().isEmpty(),
@@ -22,7 +17,7 @@ router.post(
     check("location", "Location is required").not().isEmpty(),
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req.body.data);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -63,8 +58,7 @@ router.post(
 
 // @route    GET api/member
 // @desc     Get member list
-// @access   Private
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const limit = parseInt(req.query.limit || 10);
   const startOffset = (page - 1) * limit;
@@ -94,8 +88,7 @@ router.get("/", auth, async (req, res) => {
 
 // @route    GET api/member/:id
 // @desc     GET Member
-// @access   Private
-router.get("/:id", auth, async (req, res) => {
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const member = await Member.findById(id);
@@ -113,8 +106,7 @@ router.get("/:id", auth, async (req, res) => {
 
 // @route    PUT api/member
 // @desc     Update Member
-// @access   Private
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", async (req, res) => {
   const id = req.params.id;
   const { avatar, firstName, lastName, email, position, dateJoin, location } =
     req.body.data;
@@ -160,8 +152,7 @@ router.put("/:id", auth, async (req, res) => {
 
 // @route    DELETE api/member
 // @desc     Delete member
-// @access   Private
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const memberId = req.params.id;
 
   try {
