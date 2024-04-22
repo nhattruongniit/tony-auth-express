@@ -151,7 +151,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // @route    DELETE api/member
-// @desc     Delete member
+// @desc     Delete member test
 router.delete("/:id", async (req, res) => {
   const memberId = req.params.id;
 
