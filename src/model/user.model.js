@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+  todo_id: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'todo',
+    type: Array
+  },
   avatar: {
     type: String,
-    require: true,
   },
-  firstName: {
+  first_name: {
     type: String,
-    required: true,
   },
-  lastName: {
+  last_name: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -19,17 +21,20 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    required: true 
   },
   password: {
     type: String,
     required: true,
     min: 6
   },
-  date: {
+  created_by: {
+    type: Date,
+    default: Date.now
+  },
+  updated_by: {
     type: Date,
     default: Date.now
   }
 })
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('user', userSchema);

@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
 const todoSchema = new mongoose.Schema({
-  userId: {
+  user_id: {
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User'
+    ref: 'user'
+  },
+  image: {
+    type: String
   },
   title: {
     type: String,
@@ -11,7 +14,6 @@ const todoSchema = new mongoose.Schema({
   },
   author: {
     type: Array,
-    required: true,
   },
   severity: {
     type: String,
@@ -24,10 +26,17 @@ const todoSchema = new mongoose.Schema({
   status: {
     type: String
   },
-  date: {
+  reported_by: {
+    type: String
+  },
+  created_by: {
+    type: Date,
+    default: Date.now
+  },
+  updated_by: {
     type: Date,
     default: Date.now
   }
 })
 
-module.exports = mongoose.model('Todo', todoSchema);
+module.exports = mongoose.model('todo', todoSchema);

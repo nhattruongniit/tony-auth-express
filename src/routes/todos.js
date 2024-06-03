@@ -6,6 +6,7 @@ const { check, validationResult } = require("express-validator");
 
 // model
 const Todo = require("../model/Todo");
+const User = require("../model/user.model");
 
 // @route    POST api/todo
 // @desc     Add new todo
@@ -24,7 +25,7 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
     } catch (err) {
-      res.status(400).json({
+      res.status(500).json({
         msg: `Syntax Error ${err}`,
         isSucess: false,
       });
@@ -41,17 +42,38 @@ router.post(
     //   return
     // }
 
-    const { title, author, severity, description } = req.body.data;
-    const newTodo = new Todo({
-      title,
-      author,
-      severity,
-      description,
-      status: "new",
-    });
+    const { title, author, severity, image, reported_by, description, email } = req.body.data;
+    const user = await User.findOne({ email });
 
+    if (!user) {
+      res.status(400).json({
+        msg: "Email not found",
+        isSucess: false,
+      });
+      return;
+    }
+    
     try {
+     
+      const newTodo = new Todo({
+        image: image || '',
+        reported_by: reported_by || 'tony@gmail.com',
+        user_id: user._id,
+        title,
+        author,
+        severity,
+        description,
+        status: "new",
+      });
       const todo = await newTodo.save();
+       // update user 
+       const todo_ids = user.todo_id || [];
+       todo_ids.push(newTodo._id);
+       await User.findOneAndUpdate(
+         { email },
+         { $set: { todo_id: todo_ids } },
+         { new: true }
+       )
       res.status(200).json({
         data: todo,
         msg: "Add successfully!",
