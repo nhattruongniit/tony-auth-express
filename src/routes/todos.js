@@ -98,7 +98,7 @@ router.get("/", async (req, res) => {
   const endOffset = startOffset + limit;
 
   try {
-    const todos = await Todo.find().sort({ data: -1 });
+    const todos = await Todo.find().sort({ data: -1 }).populate("user_id");
     const total = todos.length;
     const result = {
       data: todos,
