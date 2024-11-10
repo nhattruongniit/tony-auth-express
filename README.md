@@ -41,7 +41,7 @@ Headers: x-auth-token: {token}
 
 ```bash
 # Login User
-POST  /api/user/sigin
+POST  /api/user/signin
 Content-Type: application/json
 Body
 {
