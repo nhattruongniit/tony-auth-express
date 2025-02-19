@@ -67,13 +67,13 @@ router.post(
       });
       const todo = await newTodo.save();
        // update user 
-       const todo_ids = user.todo_id || [];
-       todo_ids.push(newTodo._id);
-       await User.findOneAndUpdate(
-         { email },
-         { $set: { todo_id: todo_ids } },
-         { new: true }
-       )
+      //  const todo_ids = user.todo_id || [];
+      //  todo_ids.push(newTodo._id);
+      //  await User.findOneAndUpdate(
+      //    { email },
+      //    { $set: { todo_id: todo_ids } },
+      //    { new: true }
+      //  )
       res.status(200).json({
         data: todo,
         msg: "Add successfully!",
