@@ -35,7 +35,7 @@ router.post("/signup", UserController.signup);
 // @access   Public
 router.post("/signin", UserController.signin);
 
-// @route    GET api/user/refresh-token
+// @route    POST api/user/refresh-token
 // @desc     Refresh token
 // @access   Public
 router.post("/refresh-token", UserController.refreshToken);

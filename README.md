@@ -40,6 +40,18 @@ Headers: x-auth-token: {token}
 ### Users
 
 ```bash
+# Refresh token
+POST  /api/user/refresh-token
+Content-Type: application/json
+Body
+{
+  "data": {
+    refresh_token: xxx,
+  }
+}
+```
+
+```bash
 # Login User
 POST  /api/user/signin
 Content-Type: application/json
