@@ -42,23 +42,19 @@ router.post(
     //   return
     // }
 
-    const { title, author, severity, image, reported_by, description, email } = req.body.data;
-    const user = await User.findOne({ email });
+    const { title, author, severity, description } = req.body.data;
+    // const user = await User.findOne({ email });
 
-    if (!user) {
-      res.status(400).json({
-        msg: "Email not found",
-        isSucess: false,
-      });
-      return;
-    }
+    // if (!user) {
+    //   res.status(400).json({
+    //     msg: "Email not found",
+    //     isSucess: false,
+    //   });
+    //   return;
+    // }
     
     try {
-     
       const newTodo = new Todo({
-        image: image || '',
-        reported_by: reported_by || 'tony@gmail.com',
-        user_id: user._id,
         title,
         author,
         severity,

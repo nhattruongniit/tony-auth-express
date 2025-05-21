@@ -50,5 +50,5 @@ app.use('/api/photo', photosRoute);
 app.use('/api/todo', todosRoute);
 
 app.listen(PORT, () => {
-  console.log(`Server Up and running localhost: ${PORT}`)
+  console.log(`Server Up and running localhost:${PORT}`)
 });

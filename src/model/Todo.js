@@ -1,19 +1,17 @@
 const mongoose = require('mongoose');
 
 const todoSchema = new mongoose.Schema({
-  user_id: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'user'
-  },
-  image: {
-    type: String
-  },
+  // user_id: {
+  //   type: mongoose.Schema.Types.ObjectId, 
+  //   ref: 'user'
+  // },
   title: {
     type: String,
     require: true,
   },
   author: {
-    type: Array,
+    type: String,
+    required: true,
   },
   severity: {
     type: String,
@@ -24,9 +22,6 @@ const todoSchema = new mongoose.Schema({
     required: true,
   },
   status: {
-    type: String
-  },
-  reported_by: {
     type: String
   },
   created_by: {
