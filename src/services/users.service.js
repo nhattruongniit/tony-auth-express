@@ -2,12 +2,15 @@ const UserModel = require('../model/user.model');
 
 module.exports = {
   create: async (data = {}) => {
-    const { first_name, last_name, avatar, email, role, password } = data;
+    const { first_name, last_name, email, role, address, city, country, state, password } = data;
     const user = new UserModel({
-      avatar,
       first_name,
       last_name,
       email,
+      address,
+      city,
+      country,
+      state,
       role,
       password,
     });

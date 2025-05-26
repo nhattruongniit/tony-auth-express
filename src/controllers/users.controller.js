@@ -9,7 +9,7 @@ const { generateAccessToken, generateRefreshToken } = require("../helpers");
 
 module.exports = {
   signup: async (req, res) => {
-    const { firstName, lastName, avatar, email, role, password } =
+    const { first_name, last_name, email, role, address, city, country, state, password } =
       req.body.data;
 
     // check email exist
@@ -26,10 +26,13 @@ module.exports = {
 
     // create a new user
     const payload = {
-      avatar,
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       email,
+      address,
+      city,
+      country,
+      state,
       role,
       password: hashPassword,
     };
@@ -70,9 +73,8 @@ module.exports = {
     const payload = {
       user: {
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        avatar: user.avatar,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
         role: user.role,
       },
@@ -100,8 +102,14 @@ module.exports = {
     try {
       const users = await UserService.findAll();
       const total = users.length;
+      const newUsers = users.map(item => {
+        delete item._doc.password;
+        return {
+          ...item._doc, 
+        }
+      })
       const result = {
-        data: users,
+        data: newUsers,
         page,
         limit,
         total,
@@ -109,7 +117,7 @@ module.exports = {
       };
       if (total === 0) return res.status(200).json(result);
 
-      result.data = users.slice(startOffset, endOffset);
+      result.data = newUsers.slice(startOffset, endOffset);
       res.status(200).json(result);
     } catch (err) {
       res.status(500).json({
@@ -123,14 +131,14 @@ module.exports = {
     const id = req.params.id;
     try {
       const user = await UserService.findOne(id);
-      // user._doc; // get all data except password
+      delete user._doc.password;
       res.status(200).json({
         data: user,
         isSucess: true,
       });
     } catch (err) {
       res.status(400).json({
-        msg: `User not found ${err}`,
+        msg: `User not found`,
         isSucess: false,
       });
     }

@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  todo_id: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'todo',
-    type: Array
-  },
-  avatar: {
-    type: String,
-  },
+  // todo_id: {
+  //   type: mongoose.Schema.Types.ObjectId, 
+  //   ref: 'todo',
+  //   type: Array
+  // },
   first_name: {
     type: String,
   },
@@ -19,6 +16,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true 
   },
+  address: {
+    type: String,
+  }, 
+  city: {
+    type: String,
+  }, 
+  country: {
+    type: String,
+  }, 
+  state: {
+    type: String,
+  }, 
   role: {
     type: String,
   },
