@@ -14,15 +14,24 @@ const User = require("../model/user.model");
 router.post(
   "/",
   [
-    check("title", "Title is required").not().isEmpty(),
-    check("severity", "Severity is required").not().isEmpty(),
-    check("description", "Description is required").not().isEmpty(),
+    check("data.title", "Title is required").not().isEmpty(),
+    check("data.severity", "Severity is required").not().isEmpty(),
+    check("data.description", "Description is required").not().isEmpty(),
   ],
   async (req, res) => {
     try {
-      const errors = validationResult(req.body.data);
+      const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ 
+          msg: "Validation failed",
+          isSucess: false,
+          errors: errors.array().map(err => {
+            return {
+              msg: err.msg,
+              key: err.param.split('.')[1]
+            }
+          }),
+        });
       }
     } catch (err) {
       res.status(500).json({
@@ -94,7 +103,8 @@ router.get("/", async (req, res) => {
   const endOffset = startOffset + limit;
 
   try {
-    const todos = await Todo.find().sort({ data: -1 }).populate("user_id");
+    // const todos = await Todo.find().sort({ data: -1 }).populate("user_id");
+    const todos = await Todo.find().sort({ data: -1 });
     const total = todos.length;
     const result = {
       data: todos,

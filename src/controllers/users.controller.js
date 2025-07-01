@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator");
 
 // services
 const UserService = require("../services/users.service");
@@ -9,8 +10,24 @@ const { generateAccessToken, generateRefreshToken } = require("../helpers");
 
 module.exports = {
   signup: async (req, res) => {
-    const { first_name, last_name, email, role, address, city, country, state, password } =
-      req.body.data;
+    const { first_name, last_name, email, role, address, city, country, state, password } = req.body?.data || {};
+    
+    // Extract validation errors from request
+    const errors = validationResult(req);
+    
+    // Check if there are validation errors
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ 
+        msg: "Validation failed",
+        isSucess: false,
+        errors: errors.array().map(err => {
+          return {
+            msg: err.msg,
+            key: err.param.split('.')[1]
+          }
+        }),
+      });
+    }
 
     // check email exist
     const emailExisted = await UserService.findEmail(email);
@@ -53,6 +70,18 @@ module.exports = {
   signin: async (req, res) => {
     const { email, password } = req.body.data;
 
+    // Extract validation errors from request
+    const errors = validationResult(req);
+    
+    // Check if there are validation errors
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ 
+        msg: "Validation failed",
+        isSucess: false,
+        errors: errors.array() 
+      });
+    }
+
     // check email exist
     const user = await UserService.findEmail(email);
     if (!user)
@@ -73,9 +102,13 @@ module.exports = {
     const payload = {
       user: {
         id: user.id,
+        email: user.email,
         first_name: user.first_name,
         last_name: user.last_name,
-        email: user.email,
+        address: user.address,
+        city: user.city,
+        country: user.country,
+        state: user.state,
         role: user.role,
       },
     };
