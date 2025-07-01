@@ -16,7 +16,7 @@ $ npm run dev
 ```
 
 ## API
-https://tony-auth-express-vdee-6j0s-fhovok9bu.vercel.app/
+[https://tony-auth-express-vdee-6j0s-fhovok9bu.vercel.app/](https://tony-auth-express-vdee.vercel.app/)
 
 Get fake avatar url:
 
